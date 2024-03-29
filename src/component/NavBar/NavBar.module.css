@@ -1,0 +1,33 @@
+.container{
+    width:100%;
+    height: 150px;
+    background-color: gray;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.title{
+    font-size: 50px;
+    font-family: monospace;
+    font-weight: bolder;
+    color:white;
+}
+.addPostButton > button {
+    cursor: pointer;
+    background-color: rgb(228, 87, 62);
+    border: none;
+    border-radius: 10px;
+    padding: 10px 15px;
+    color:white;
+    font-weight: bold;
+    font-size: 16px;
+    margin-top: 15px;
+}
+
+.addPostButton > button:hover{
+    background-color: rgb(211, 44, 15);
+    scale: 1.05;
+
+}

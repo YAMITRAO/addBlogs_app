@@ -71,9 +71,8 @@ const DataProvider = (props) => {
            throw new Error('Problem In Getting Data from API');
         }
       const data = await response.json();
-      if(data.length > 0){
         dispatchFun({ type:"LOAD_DATA", data:data});
-      }
+      
     }
     catch(error){
       console.log("API_GET_ERROR",error);
@@ -148,24 +147,40 @@ const DataProvider = (props) => {
     }
   }
 
-  //change::::::end
 
-  const deletePost = (postID) => {
-    console.log("postid that must delete", postID);
+  // const deletePost = (postID) => {
+  //   console.log("postid that must delete", postID);
+  //   let deleteUrl = `${url}/${postID}`
+  //   fetch(deleteUrl, {
+  //     method:"DELETE"
+  //   }).then( res => {
+  //     if(res.ok){
+  //       fetch(url).then( res => {
+  //         if(res.ok){
+  //           return res.json().then( data => {
+  //             dispatchFun({ type:"LOAD_DATA", data:data});
+  //           })
+  //         }
+  //       })
+  //     }
+  //   })
+  // }
+
+  //CHANGE :::::START
+  const deletePost = async(postID) => {
     let deleteUrl = `${url}/${postID}`
-    fetch(deleteUrl, {
-      method:"DELETE"
-    }).then( res => {
-      if(res.ok){
-        fetch(url).then( res => {
-          if(res.ok){
-            return res.json().then( data => {
-              dispatchFun({ type:"LOAD_DATA", data:data});
-            })
-          }
-        })
+    try{
+      const response = await  fetch(deleteUrl, {
+        method:"DELETE"
+      })
+      if(!response.ok){
+        throw new Error("Problem During deleting the Post");
       }
-    })
+       await getApiFun();
+    }
+    catch(error){
+      console.log("API_DELETE_ERROT", error);
+    }
   }
 
   const updateThePost = (data) => {
@@ -179,30 +194,56 @@ const DataProvider = (props) => {
     dispatchFun(sendData);
   }
 
-  const putHandler = (data) => {
-    console.log("Update button clicked and the data to put request is")
-    console.log(data);
-    const putUrl = `${url}/${data._id}`
-    fetch(putUrl, {
-      headers: { "Content-Type": "application/json; charset=utf-8" },
-      method: 'PUT',
-      body: JSON.stringify({
-          title:data.title,
-          desc:data.desc,
-          imgUrl:data.imgUrl,
-      })
-    }).then( res => {
-      if(res.ok){
-        fetch(url).then(res => {
-          if(res.ok){
-            return res.json().then( data => {
-              dispatchFun({ type:"LOAD_DATA", data:data});
-            })
-          }
+  // const putHandler = (data) => {
+  //   console.log("Update button clicked and the data to put request is")
+  //   console.log(data);
+  //   const putUrl = `${url}/${data._id}`
+  //   fetch(putUrl, {
+  //     headers: { "Content-Type": "application/json; charset=utf-8" },
+  //     method: 'PUT',
+  //     body: JSON.stringify({
+  //         title:data.title,
+  //         desc:data.desc,
+  //         imgUrl:data.imgUrl,
+  //     })
+  //   }).then( res => {
+  //     if(res.ok){
+  //       fetch(url).then(res => {
+  //         if(res.ok){
+  //           return res.json().then( data => {
+  //             dispatchFun({ type:"LOAD_DATA", data:data});
+  //           })
+  //         }
+  //       })
+  //     }
+  //   })
+  // }
+
+  //START
+
+  const putHandler = async(mydata) => {
+    const putUrl = `${url}/${mydata._id}`
+    try{
+      const response = await fetch(putUrl, {
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+        method: 'PUT',
+        body: JSON.stringify({
+            title:mydata.title,
+            desc:mydata.desc,
+            imgUrl:mydata.imgUrl,
         })
+      })
+      if(!response.ok){
+        throw new Error("Problem during updating the post");
       }
-    })
+      await getApiFun();
+
+    }
+    catch(error){
+      console.log("API_PUT_ERROR", error)
+    }
   }
+
 
     let data = {
       displayPostForm: state.displayPostForm,

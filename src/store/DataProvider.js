@@ -3,7 +3,7 @@
 import React, { useEffect, useReducer } from 'react'
 import DataContext from './DataContext'
 
-const url = "https://crudcrud.com/api/036fefe880674024806608a3c2fb971b/post"
+const url = "https://crudcrud.com/api/e34dd644e1b341a39a1d53f422507323/post"
 
 const reducer = (state, action) => {
   if(action.type === "LOAD_DATA"){

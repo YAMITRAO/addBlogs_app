@@ -2,11 +2,26 @@ import React, { useContext } from 'react'
 import style from "./PostCart.module.css"
 import DataContext from '../../store/DataContext';
 
+
 const PostCart = (props) => {
     let data = props.data;
     const ctx = useContext(DataContext);
+
     
+    
+    const edithandler = (e) => {
+        let postId = e.target.value;
+        // console.log("edit the post clicked");
+        // console.log("edit id is ", postId);
+        ctx.displayPostHandler();
+        ctx.updatePostHandler({
+            ...data,
+            type:"CHANGE_ISEDIT_TRUE"
+        });
+    }
   return (
+    <>
+   
     <div className={style.container}>
         <div className={style.postContainer}>
 
@@ -22,7 +37,7 @@ const PostCart = (props) => {
             </div>
 
             <div className={style.button}>
-                <button>Edit</button>
+                <button value={data._id} onClick={ edithandler }>Edit</button>
                 <button value={data._id} onClick={ (e) => {
                     console.log("delete request for");
                     console.log(e.target.value);
@@ -31,6 +46,7 @@ const PostCart = (props) => {
             </div>
         </div>
     </div>
+    </>
   )
 }
 

@@ -10,7 +10,7 @@ const HomePage = () => {
     <div style={{display:'flex'}}>
     {data.length>0 ?  data.map( (val) => {
         return (
-            <PostCart data={val}/>
+            <PostCart key={val._id} data={val}/>
         )
     }) : <p style={{ width:"100%", textAlign:"center", fontSize:"30px"}}>No Data Found</p>}
     </div>
